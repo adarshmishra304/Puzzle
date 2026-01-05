@@ -48,7 +48,9 @@ public class PuzzleSwing extends JFrame {
         int[] nums = new int[9];
         for (int i = 0; i < 9; i++) nums[i] = i;
 
-        shuffle(nums);
+        do {
+            shuffle(nums);
+        } while (!isSolvable(nums));
 
         int k = 0;
         for (int i = 0; i < 3; i++) {
@@ -57,10 +59,12 @@ public class PuzzleSwing extends JFrame {
                 if (board[i][j] == 0) {
                     blankRow = i;
                     blankCol = j;
-                }
+                }   
             }
         }
     }
+
+
 
     void shuffle(int[] arr) {
         Random rand = new Random();
@@ -120,6 +124,19 @@ public class PuzzleSwing extends JFrame {
         }
         return true;
     }
+
+    boolean isSolvable(int[] arr) {
+        int inv = 0;
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[i] != 0 && arr[j] != 0 && arr[i] > arr[j]) {
+                    inv++;
+                }
+            }
+        }
+        return inv % 2 == 0;
+    }
+
 
     public static void main(String[] args) {
         new PuzzleSwing();
